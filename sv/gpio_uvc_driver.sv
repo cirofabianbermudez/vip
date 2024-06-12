@@ -1,0 +1,67 @@
+`ifndef GPIO_UVC_DRIVER_SV
+`define GPIO_UVC_DRIVER_SV
+
+class gpio_uvc_driver extends uvm_driver #(adder_sequence_item);
+
+  `uvm_component_utils(gpio_uvc_driver)
+
+  virtual gpio_uvc_if vif;
+
+  extern function new(string name, uvm_component parent);
+  extern function void build_phase(uvm_phase phase);
+  extern task run_phase(uvm_phase phase);
+
+  extern task drive_sync();
+  extern task drive_async();
+  extern task do_drive();
+
+endclass : gpio_uvc_driver
+
+
+function gpio_uvc_driver::new(string name, uvm_component parent);
+  super.new(name, parent);
+endfunction : new
+
+
+function void gpio_uvc_driver::build_phase(uvm_phase phase);
+  if ( !uvm_config_db #(virtual gpio_uvc_if)::get(get_parent(), "", "vif", vif) ) begin
+		  `uvm_fatal(get_name(), "Could not retrieve gpio_uvc_if from config db")
+	end
+endfunction : build_phase
+
+
+task gpio_uvc_driver::run_phase(uvm_phase phase);
+  forever begin
+    seq_item_port.get_next_item(req);
+    do_drive();
+    seq_item_port.item_done();
+  end
+endtask : run_phase
+
+
+task gpio_uvc_driver::drive_sync();
+  @(vif.cb_drv);
+  vif.cb_drv.gpio_pin <= req.gpio_pin;
+endtask : drive_sync
+
+
+task gpio_uvc_driver::drive_async();
+  vif.gpio_pin = req.gpio_pin;
+endtask : drive_async
+
+
+task gpio_uvc_driver::do_drive();
+
+  if (req.trans_type == TRANS_ASYNC) begin
+    drive_async();
+  end else begin
+    drive_sync();
+  end
+
+  if (req.trans_stage == TRANS_LAST) begin
+    repeat(2) @(vif.cb_drv);
+  end
+
+endtask : do_drive
+
+`endif // GPIO_UVC_DRIVER_SV
