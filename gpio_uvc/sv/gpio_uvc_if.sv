@@ -2,7 +2,7 @@
 `define GPIO_UVC_IF_SV
 
 interface gpio_uvc_if (
-  input logic clk;
+  input logic clk
 );
 
   logic [7:0] gpio_pin;

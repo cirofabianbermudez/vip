@@ -1,3 +1,6 @@
+`ifndef GPIO_UVC_PKG_SV
+`define GPIO_UVC_PKG_SV
+
 package gpio_uvc_pkg;
 
   `include "uvm_macros.svh"
@@ -13,3 +16,5 @@ package gpio_uvc_pkg;
   `include "gpio_uvc_sequence_base.sv"
 
 endpackage : gpio_uvc_pkg
+
+`endif // TOP_TEST_PKG_SV

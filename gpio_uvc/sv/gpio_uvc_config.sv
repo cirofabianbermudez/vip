@@ -6,7 +6,6 @@ class gpio_uvc_config extends uvm_object;
   `uvm_object_utils(gpio_uvc_config)
 
   uvm_active_passive_enum  is_active = UVM_ACTIVE;
-  bit                      coverage_enable;    
 
   extern function new(string name = "");
 

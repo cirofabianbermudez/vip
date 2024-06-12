@@ -1,7 +1,7 @@
 `ifndef GPIO_UVC_DRIVER_SV
 `define GPIO_UVC_DRIVER_SV
 
-class gpio_uvc_driver extends uvm_driver #(adder_sequence_item);
+class gpio_uvc_driver extends uvm_driver #(gpio_uvc_sequence_item);
 
   `uvm_component_utils(gpio_uvc_driver)
 
@@ -52,13 +52,13 @@ endtask : drive_async
 
 task gpio_uvc_driver::do_drive();
 
-  if (req.trans_type == TRANS_ASYNC) begin
+  if (req.trans_type == GPIO_UVC_ITEM_ASYNC) begin
     drive_async();
   end else begin
     drive_sync();
   end
 
-  if (req.trans_stage == TRANS_LAST) begin
+  if (req.trans_stage == GPIO_UVC_ITEM_LAST) begin
     repeat(2) @(vif.cb_drv);
   end
 
