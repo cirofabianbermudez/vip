@@ -41,6 +41,11 @@ task top_test::run_phase(uvm_phase phase);
 
   phase.raise_objection(this);
   fork
+    // Parallel sequences
+    // https://verificationacademy.com/topics/uvm-universal-verification-methodology/advanced-uvm/the-proper-care-and-feeding-of-sequences/
+
+    // Virtual sequences
+    // https://verificationacademy.com/topics/uvm-universal-verification-methodology/advanced-uvm/layered-sequences/
     seqA.start(env.port_a_agent.sqr);
     seqB.start(env.port_b_agent.sqr);
   join
