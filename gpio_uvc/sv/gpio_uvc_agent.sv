@@ -1,16 +1,20 @@
 `ifndef GPIO_UVC_AGENT_SV
 `define GPIO_UVC_AGENT_SV
 
-class gpio_uvc_agent extends uvm_agent;
+class gpio_uvc_agent #(int WIDTH = 8) extends uvm_agent;
 
-  `uvm_component_utils(gpio_uvc_agent)
+  typedef gpio_uvc_agent #(WIDTH) gpio_uvc_agent_t;
+  `uvm_component_param_utils(gpio_uvc_agent_t)
 
   uvm_analysis_port #(gpio_uvc_sequence_item) analysis_port;
 
-  gpio_uvc_sequencer sqr;
-  gpio_uvc_driver    drv;
-  gpio_uvc_monitor   mon;
-  gpio_uvc_config    cfg;
+  typedef gpio_uvc_driver  #(WIDTH) gpio_uvc_driver_t;
+  typedef gpio_uvc_monitor #(WIDTH) gpio_uvc_monitor_t;
+
+  gpio_uvc_sequencer  sqr;
+  gpio_uvc_driver_t   drv;
+  gpio_uvc_monitor_t  mon;
+  gpio_uvc_config     cfg;
 
   extern function new(string name, uvm_component parent);
   extern function void build_phase(uvm_phase phase);
@@ -32,12 +36,12 @@ function void gpio_uvc_agent::build_phase(uvm_phase phase);
 
   if (cfg.is_active == UVM_ACTIVE) begin
     sqr = gpio_uvc_sequencer::type_id::create("sqr", this);
-    drv = gpio_uvc_driver   ::type_id::create("drv", this);
+    drv = gpio_uvc_driver_t::type_id::create("drv", this);
     `uvm_info(get_type_name(), "sqr created", UVM_MEDIUM)
     `uvm_info(get_type_name(), "drv created", UVM_MEDIUM)
   end
 
-  mon = gpio_uvc_monitor::type_id::create("mon", this);
+  mon = gpio_uvc_monitor_t::type_id::create("mon", this);
   `uvm_info(get_type_name(), "mon created", UVM_MEDIUM)
 
   analysis_port = new("analysis_port", this);

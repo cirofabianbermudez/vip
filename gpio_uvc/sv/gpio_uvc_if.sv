@@ -1,11 +1,11 @@
 `ifndef GPIO_UVC_IF_SV
 `define GPIO_UVC_IF_SV
 
-interface gpio_uvc_if (
+interface gpio_uvc_if #(parameter WIDTH = 8) (
   input logic clk
 );
 
-  wire [7:0] gpio_pin;
+  wire [WIDTH-1:0] gpio_pin;
 
   clocking cb_drv @(posedge clk);
     default output #1ns;

@@ -1,11 +1,14 @@
 `ifndef GPIO_UVC_MONITOR_SV
 `define GPIO_UVC_MONITOR_SV
 
-class gpio_uvc_monitor extends uvm_monitor;
+class gpio_uvc_monitor #(int WIDTH = 8) extends uvm_monitor;
 
-  `uvm_component_utils(gpio_uvc_monitor)
+  typedef gpio_uvc_monitor #(WIDTH) gpio_uvc_monitor_t;
+  `uvm_component_param_utils(gpio_uvc_monitor_t)
 
-  virtual gpio_uvc_if vif;
+  typedef virtual gpio_uvc_if #(WIDTH) gpio_uvc_if_t;
+  gpio_uvc_if_t vif;
+
   uvm_analysis_port #(gpio_uvc_sequence_item) analysis_port;
   gpio_uvc_sequence_item trans;
 
@@ -23,7 +26,7 @@ endfunction : new
 
 
 function void gpio_uvc_monitor::build_phase(uvm_phase phase);
-  if ( !uvm_config_db #(virtual gpio_uvc_if)::get(get_parent(), "", "vif", vif) ) begin
+  if ( !uvm_config_db #(gpio_uvc_if_t)::get(get_parent(), "", "vif", vif) ) begin
 		  `uvm_fatal(get_name(), "Could not retrieve gpio_uvc_if from config db")
 	end
 

@@ -1,11 +1,13 @@
 `ifndef GPIO_UVC_DRIVER_SV
 `define GPIO_UVC_DRIVER_SV
 
-class gpio_uvc_driver extends uvm_driver #(gpio_uvc_sequence_item);
+class gpio_uvc_driver #(int WIDTH = 8) extends uvm_driver #(gpio_uvc_sequence_item);
 
-  `uvm_component_utils(gpio_uvc_driver)
+  typedef gpio_uvc_driver #(WIDTH) gpio_uvc_driver_t;
+  `uvm_component_param_utils(gpio_uvc_driver_t)
 
-  virtual gpio_uvc_if vif;
+  typedef virtual gpio_uvc_if #(WIDTH) gpio_uvc_if_t;
+  gpio_uvc_if_t vif;
 
   extern function new(string name, uvm_component parent);
   extern function void build_phase(uvm_phase phase);
@@ -24,7 +26,7 @@ endfunction : new
 
 
 function void gpio_uvc_driver::build_phase(uvm_phase phase);
-  if ( !uvm_config_db #(virtual gpio_uvc_if)::get(get_parent(), "", "vif", vif) ) begin
+  if ( !uvm_config_db #(gpio_uvc_if_t)::get(get_parent(), "", "vif", vif) ) begin
 		  `uvm_fatal(get_name(), "Could not retrieve gpio_uvc_if from config db")
 	end
 endfunction : build_phase
