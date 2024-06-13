@@ -50,8 +50,9 @@ endfunction : do_compare
 function string gpio_uvc_sequence_item::convert2string();
   string s;
   s = super.convert2string();
-  $sformat(s, "%s, gpio_pin = 'd%0d", get_type_name(), gpio_pin);
+  $sformat(s, "gpio_pin = 'd%0d", gpio_pin);
   return s;
 endfunction : convert2string
+
 
 `endif // GPIO_UVC_SEQUENCE_ITEM_SV

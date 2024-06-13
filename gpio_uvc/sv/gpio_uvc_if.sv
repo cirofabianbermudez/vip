@@ -5,7 +5,7 @@ interface gpio_uvc_if (
   input logic clk
 );
 
-  logic [7:0] gpio_pin;
+  wire [7:0] gpio_pin;
 
   clocking cb_drv @(posedge clk);
     default output #1ns;
