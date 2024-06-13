@@ -25,6 +25,8 @@ endfunction : new
 function void top_test::build_phase(uvm_phase phase);
   env = top_env::type_id::create("env", this);
   `uvm_info(get_type_name(), "env created", UVM_MEDIUM)
+  set_inst_override_by_type("env.port_a_agent.*",gpio_uvc_sequence_item::get_type(), gpio_uvc_sequence_item_2::get_type() );
+  //set_type_override_by_type(gpio_uvc_sequence_item::get_type(), gpio_uvc_sequence_item_2::get_type() );
 endfunction : build_phase
 
 
@@ -37,7 +39,7 @@ endfunction : end_of_elaboration_phase
 task top_test::run_phase(uvm_phase phase);
 
   seqA = gpio_uvc_sequence_base::type_id::create("seqA");
-  seqB = gpio_uvc_sequence_base::type_id::create("seqA");
+  seqB = gpio_uvc_sequence_base::type_id::create("seqB");
 
   phase.raise_objection(this);
   fork

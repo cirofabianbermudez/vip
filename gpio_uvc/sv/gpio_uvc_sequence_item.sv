@@ -20,7 +20,7 @@ endclass : gpio_uvc_sequence_item
 
 function gpio_uvc_sequence_item::new(string name = "");
   super.new(name);
-endfunction
+endfunction : new
 
 
 function void gpio_uvc_sequence_item::do_copy(uvm_object rhs);
@@ -53,6 +53,31 @@ function string gpio_uvc_sequence_item::convert2string();
   $sformat(s, "gpio_pin = 'd%0d", gpio_pin);
   return s;
 endfunction : convert2string
+
+
+// ================================================================
+// ================================================================
+// ================================================================
+
+
+class gpio_uvc_sequence_item_2 extends gpio_uvc_sequence_item;
+
+  `uvm_object_utils(gpio_uvc_sequence_item_2)
+
+  //rand logic [7:0] gpio_pin;
+
+  extern function new(string name = "");
+
+  constraint two_values {
+    gpio_pin == 8'd1;
+  }
+
+endclass : gpio_uvc_sequence_item_2
+
+
+function gpio_uvc_sequence_item_2::new(string name = "");
+  super.new(name);
+endfunction : new
 
 
 `endif // GPIO_UVC_SEQUENCE_ITEM_SV
