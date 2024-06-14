@@ -14,6 +14,10 @@ class top_env extends uvm_env;
   gpio_uvc_agent #(8) port_c_agent;
   gpio_uvc_config     port_c_agent_cfg;
 
+
+  gpio_uvc_agent #(1) port_rst_agent;
+  gpio_uvc_config     port_rst_agent_cfg;
+
   extern function new(string name, uvm_component parent);
   extern function void build_phase(uvm_phase phase);
   extern function void connect_phase(uvm_phase phase);
@@ -52,6 +56,11 @@ function void top_env::build_agents();
   port_c_agent_cfg.is_active = UVM_PASSIVE;
   uvm_config_db #(gpio_uvc_config)::set(this, "port_c_agent", "cfg", port_c_agent_cfg);
   port_c_agent = gpio_uvc_agent#(8)::type_id::create("port_c_agent", this);
+
+  port_rst_agent_cfg = gpio_uvc_config::type_id::create("port_rst_agent_cfg", this);
+  port_rst_agent_cfg.is_active = UVM_ACTIVE;
+  uvm_config_db #(gpio_uvc_config)::set(this, "port_rst_agent", "cfg", port_rst_agent_cfg);
+  port_rst_agent = gpio_uvc_agent#(1)::type_id::create("port_rst_agent", this);
 
 endfunction : build_agents
 

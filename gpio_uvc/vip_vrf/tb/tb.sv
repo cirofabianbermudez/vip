@@ -10,6 +10,7 @@ module tb;
     clk = 0;
   end
   
+  gpio_uvc_if #(1) port_rst_if(clk);
   gpio_uvc_if #(8) port_a_if(clk);
   gpio_uvc_if #(8) port_b_if(clk);
   gpio_uvc_if #(8) port_c_if(clk);
@@ -20,7 +21,7 @@ module tb;
 
   adder dut (
     .clk(port_a_if.clk),
-    .rst(1'b0),
+    .rst(port_rst_if.gpio_pin),
     .A(port_a_if.gpio_pin),
     .B(port_b_if.gpio_pin),
     .C(port_c_if.gpio_pin)
@@ -32,6 +33,7 @@ module tb;
     uvm_config_db #(virtual gpio_uvc_if #(8))::set(null, "uvm_test_top.env.port_a_agent", "vif", port_a_if);
     uvm_config_db #(virtual gpio_uvc_if #(8))::set(null, "uvm_test_top.env.port_b_agent", "vif", port_b_if);
     uvm_config_db #(virtual gpio_uvc_if #(8))::set(null, "uvm_test_top.env.port_c_agent", "vif", port_c_if);
+    uvm_config_db #(virtual gpio_uvc_if #(1))::set(null, "uvm_test_top.env.port_rst_agent", "vif", port_rst_if);
     run_test();
   end
 
