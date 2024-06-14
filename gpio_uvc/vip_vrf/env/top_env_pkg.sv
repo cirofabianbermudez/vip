@@ -8,6 +8,7 @@ package top_env_pkg;
 
   import gpio_uvc_pkg::*;
   `include "top_env.sv"
+  `include "vseq_base.sv"
 
 endpackage : top_env_pkg
 

@@ -6,13 +6,13 @@ class top_test extends uvm_test;
   `uvm_component_utils(top_test)
 
   top_env env;
-  gpio_uvc_sequence_base seqA;
-  gpio_uvc_sequence_base seqB;
+  vseq_base vseq;
 
   extern function new(string name, uvm_component parent);
   extern function void build_phase(uvm_phase phase);
   extern function void end_of_elaboration_phase(uvm_phase phase);
   extern task run_phase(uvm_phase phase);
+  extern function void init_vseq();
 
 endclass : top_test
 
@@ -34,21 +34,19 @@ function void top_test::end_of_elaboration_phase(uvm_phase phase);
 endfunction : end_of_elaboration_phase
 
 
+function void top_test::init_vseq();
+  vseq.a_sqr = env.port_a_agent.sqr;
+  vseq.b_sqr = env.port_b_agent.sqr;
+endfunction : init_vseq
+
+
 task top_test::run_phase(uvm_phase phase);
 
-  seqA = gpio_uvc_sequence_base::type_id::create("seqA");
-  seqB = gpio_uvc_sequence_base::type_id::create("seqA");
+  vseq = vseq_base::type_id::create("vseq");
 
   phase.raise_objection(this);
-  fork
-    // Parallel sequences
-    // https://verificationacademy.com/topics/uvm-universal-verification-methodology/advanced-uvm/the-proper-care-and-feeding-of-sequences/
-
-    // Virtual sequences
-    // https://verificationacademy.com/topics/uvm-universal-verification-methodology/advanced-uvm/layered-sequences/
-    seqA.start(env.port_a_agent.sqr);
-    seqB.start(env.port_b_agent.sqr);
-  join
+  init_vseq();
+  vseq.start(null);
   phase.drop_objection(this);
 
 endtask : run_phase

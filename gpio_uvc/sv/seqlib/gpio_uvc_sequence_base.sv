@@ -9,7 +9,6 @@ class gpio_uvc_sequence_base extends uvm_sequence #(gpio_uvc_sequence_item);
 
   extern function new(string name = "");
   extern virtual task body();
-  extern function void display();
 
 endclass : gpio_uvc_sequence_base
 
@@ -32,10 +31,5 @@ task gpio_uvc_sequence_base::body();
       finish_item(req);
     end
 endtask : body
-
-
-function void gpio_uvc_sequence_base::display();
- `uvm_info(get_type_name(), "inside base sequence", UVM_MEDIUM);
-endfunction : display
 
 `endif // GPIO_UVC_SEQUENCE_BASE_SV

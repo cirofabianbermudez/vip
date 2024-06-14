@@ -10,18 +10,9 @@ module tb;
     clk = 0;
   end
 
-
-  //logic [7:0] portA;
-  //logic [7:0] portB;
-  //logic [7:0] portC;
-  
   gpio_uvc_if port_a_if(clk);
   gpio_uvc_if port_b_if(clk);
   gpio_uvc_if port_c_if(clk);
-
-  //assign portA = port_a_if.gpio_pin;
-  //assign portB = port_b_if.gpio_pin;
-  //assign portC = port_c_if.gpio_pin;
 
   adder dut (
     .clk(port_a_if.clk),
