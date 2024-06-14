@@ -43,12 +43,12 @@ endtask : run_phase
 
 task gpio_uvc_driver::drive_sync();
   @(vif.cb_drv);
-  vif.cb_drv.gpio_pin <= req.gpio_pin;
+  vif.cb_drv.gpio_pin <= req.gpio_pin[WIDTH-1:0];
 endtask : drive_sync
 
 
 task gpio_uvc_driver::drive_async();
-  vif.gpio_pin = req.gpio_pin;
+  vif.gpio_pin = req.gpio_pin[WIDTH-1:0];
 endtask : drive_async
 
 

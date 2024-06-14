@@ -44,7 +44,8 @@ endtask : run_phase
 task gpio_uvc_monitor::do_mon();
   forever begin
     @(vif.gpio_pin)
-    trans.gpio_pin = vif.gpio_pin;
+    //trans.gpio_pin = vif.gpio_pin | {WIDTH{1'b0}};
+    trans.gpio_pin = 0;
     `uvm_info(get_type_name(), {"Got item ", trans.convert2string()}, UVM_MEDIUM)
     analysis_port.write(trans);
   end

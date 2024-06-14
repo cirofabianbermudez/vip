@@ -55,29 +55,4 @@ function string gpio_uvc_sequence_item::convert2string();
 endfunction : convert2string
 
 
-// ================================================================
-// ================================================================
-// ================================================================
-
-
-class gpio_uvc_sequence_item_2 extends gpio_uvc_sequence_item;
-
-  `uvm_object_utils(gpio_uvc_sequence_item_2)
-
-  //rand logic [7:0] gpio_pin;
-
-  extern function new(string name = "");
-
-  constraint two_values {
-    gpio_pin == 8'd1;
-  }
-
-endclass : gpio_uvc_sequence_item_2
-
-
-function gpio_uvc_sequence_item_2::new(string name = "");
-  super.new(name);
-endfunction : new
-
-
 `endif // GPIO_UVC_SEQUENCE_ITEM_SV
