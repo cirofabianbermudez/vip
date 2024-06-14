@@ -5,6 +5,7 @@ interface gpio_uvc_if (
   input logic clk
 );
 
+  // Changed from logic to wire to remove warning
   wire [7:0] gpio_pin;
 
   clocking cb_drv @(posedge clk);
