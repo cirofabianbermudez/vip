@@ -15,12 +15,14 @@ module tb;
   gpio_uvc_if port_c_if(clk);
   gpio_uvc_if port_rst_if(clk);
 
+  localparam WIDTH = 8;
+
   adder dut (
     .clk(port_a_if.clk),
     .rst(port_rst_if.gpio_pin[0]),
-    .A(port_a_if.gpio_pin),
-    .B(port_b_if.gpio_pin),
-    .C(port_c_if.gpio_pin_passive)
+    .A(port_a_if.gpio_pin[WIDTH-1:0]),
+    .B(port_b_if.gpio_pin[WIDTH-1:0]),
+    .C(port_c_if.gpio_pin_passive[WIDTH-1:0])
   );
   
   initial begin

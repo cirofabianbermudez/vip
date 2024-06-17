@@ -5,7 +5,7 @@ class gpio_uvc_sequence_base extends uvm_sequence #(gpio_uvc_sequence_item);
 
   `uvm_object_utils(gpio_uvc_sequence_base)
 
-  int num_of_trans = 3;
+  int num_of_trans = 10;
 
   extern function new(string name = "");
   extern virtual task body();
@@ -31,7 +31,7 @@ task gpio_uvc_sequence_base::body();
         req.trans_type = GPIO_UVC_ITEM_SYNC;
       end
 
-      if ( !req.randomize() ) begin
+      if ( !req.randomize() with { gpio_pin inside {[0:255]}; } ) begin
         `uvm_error(get_type_name(), "Failed to randomize transaction")
       end
 

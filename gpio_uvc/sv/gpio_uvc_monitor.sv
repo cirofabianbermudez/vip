@@ -50,7 +50,8 @@ task gpio_uvc_monitor::do_mon();
       trans.gpio_pin = vif.gpio_pin;
     end else begin
       @(vif.gpio_pin_passive)
-      trans.gpio_pin = vif.gpio_pin_passive;
+      trans.gpio_pin = vif.gpio_pin_passive & cfg.get_mask();
+      //$display("Value: %b\nMask:  %b\nAND:   %b", vif.gpio_pin_passive, cfg.get_mask(), trans.gpio_pin);
     end
     `uvm_info(get_type_name(), {"Got item ", trans.convert2string()}, UVM_MEDIUM)
     analysis_port.write(trans);

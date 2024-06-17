@@ -8,7 +8,7 @@ class gpio_uvc_sequence_item extends uvm_sequence_item;
   gpio_uvc_item_stage_e  trans_stage = GPIO_UVC_ITEM_MIDDLE;
   gpio_uvc_item_type_e   trans_type  = GPIO_UVC_ITEM_SYNC;
 
-  rand logic [7:0] gpio_pin;
+  rand gpio_uvc_data_t gpio_pin;
 
   extern function new(string name = "");
   extern function void do_copy(uvm_object rhs);
@@ -50,7 +50,7 @@ endfunction : do_compare
 function string gpio_uvc_sequence_item::convert2string();
   string s;
   s = super.convert2string();
-  $sformat(s, "gpio_pin = 'd%0d", gpio_pin);
+  $sformat(s, "gpio_pin = 'd%0d, 'h%0h", gpio_pin, gpio_pin);
   return s;
 endfunction : convert2string
 

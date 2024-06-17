@@ -43,21 +43,25 @@ function void top_env::build_agents();
 
   port_a_agent_cfg = gpio_uvc_config::type_id::create("port_a_agent_cfg", this);
   port_a_agent_cfg.is_active = UVM_ACTIVE;
+  port_a_agent_cfg.pin_width = 8;
   uvm_config_db #(gpio_uvc_config)::set(this, "port_a_agent", "cfg", port_a_agent_cfg);
   port_a_agent = gpio_uvc_agent::type_id::create("port_a_agent", this);
 
   port_b_agent_cfg = gpio_uvc_config::type_id::create("port_b_agent_cfg", this);
   port_b_agent_cfg.is_active = UVM_ACTIVE;
+  port_b_agent_cfg.pin_width = 8;
   uvm_config_db #(gpio_uvc_config)::set(this, "port_b_agent", "cfg", port_b_agent_cfg);
   port_b_agent = gpio_uvc_agent::type_id::create("port_b_agent", this);
 
   port_c_agent_cfg = gpio_uvc_config::type_id::create("port_c_agent_cfg", this);
   port_c_agent_cfg.is_active = UVM_PASSIVE;
+  port_c_agent_cfg.pin_width = 8;
   uvm_config_db #(gpio_uvc_config)::set(this, "port_c_agent", "cfg", port_c_agent_cfg);
   port_c_agent = gpio_uvc_agent::type_id::create("port_c_agent", this);
 
   port_rst_agent_cfg = gpio_uvc_config::type_id::create("port_rst_agent_cfg", this);
   port_rst_agent_cfg.is_active = UVM_ACTIVE;
+  port_rst_agent_cfg.pin_width = 1;
   uvm_config_db #(gpio_uvc_config)::set(this, "port_rst_agent", "cfg", port_rst_agent_cfg);
   port_rst_agent = gpio_uvc_agent::type_id::create("port_rst_agent", this);
 
