@@ -5,8 +5,8 @@ interface gpio_uvc_if (
   input logic clk
 );
 
-  // Changed from logic to wire to remove warning
-  wire [7:0] gpio_pin;
+  logic [7:0] gpio_pin;
+  logic [7:0] gpio_pin_passive;
 
   clocking cb_drv @(posedge clk);
     default output #1ns;
@@ -16,7 +16,11 @@ interface gpio_uvc_if (
   clocking cb_mon @(posedge clk);
     default input #1ns;
     input gpio_pin;
+    input gpio_pin_passive;
   endclocking : cb_mon
+
+  modport drv (clocking cb_drv, output gpio_pin);
+  modport mon (clocking cb_mon, input gpio_pin, input gpio_pin_passive);
 
 endinterface : gpio_uvc_if
 

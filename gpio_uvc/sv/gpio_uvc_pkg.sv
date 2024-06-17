@@ -15,6 +15,9 @@ package gpio_uvc_pkg;
   `include "gpio_uvc_agent.sv"
   `include "gpio_uvc_sequence_base.sv"
 
+  `include "gpio_uvc_sequence_manual.sv"
+  `include "gpio_uvc_sequence_rst.sv"
+
 endpackage : gpio_uvc_pkg
 
 `endif // TOP_TEST_PKG_SV

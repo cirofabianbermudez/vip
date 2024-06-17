@@ -6,11 +6,11 @@ class gpio_uvc_driver extends uvm_driver #(gpio_uvc_sequence_item);
   `uvm_component_utils(gpio_uvc_driver)
 
   virtual gpio_uvc_if vif;
+  gpio_uvc_config    cfg;
 
   extern function new(string name, uvm_component parent);
   extern function void build_phase(uvm_phase phase);
   extern task run_phase(uvm_phase phase);
-
   extern task drive_sync();
   extern task drive_async();
   extern task do_drive();
@@ -27,6 +27,11 @@ function void gpio_uvc_driver::build_phase(uvm_phase phase);
   if ( !uvm_config_db #(virtual gpio_uvc_if)::get(get_parent(), "", "vif", vif) ) begin
 		  `uvm_fatal(get_name(), "Could not retrieve gpio_uvc_if from config db")
 	end
+
+  if ( !uvm_config_db #(gpio_uvc_config)::get(get_parent(), "", "cfg", cfg) ) begin
+		  `uvm_fatal(get_name(), "Could not retrieve gpio_uvc_config from config db")
+	end
+
 endfunction : build_phase
 
 
@@ -47,6 +52,7 @@ endtask : drive_sync
 
 task gpio_uvc_driver::drive_async();
   vif.gpio_pin = req.gpio_pin;
+  @(vif.cb_drv);
 endtask : drive_async
 
 
