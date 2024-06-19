@@ -33,8 +33,8 @@ task gpio_uvc_sequence_rst::body();
         req.gpio_pin = 1;
         req.trans_type = GPIO_UVC_ITEM_ASYNC;
       end else begin
-        req.trans_type = GPIO_UVC_ITEM_SYNC;
         req.gpio_pin = 0;
+        req.trans_type = GPIO_UVC_ITEM_SYNC;
       end
 
       if ( i == num_of_trans - 1) begin

@@ -52,7 +52,12 @@ endtask : drive_sync
 
 task gpio_uvc_driver::drive_async();
   vif.gpio_pin = req.gpio_pin;
-  @(vif.cb_drv);
+  if (req.delay_enable == GPIO_UVC_ITEM_DELAY_ON) begin
+    $display($sformatf("\ngpio_pin: %5d, delay_enable: %5d, delay_duration_ps: %5d\n",req.gpio_pin, req.delay_enable, req.delay_duration_ps) );
+    #(req.delay_duration_ps*1ps);
+  end else begin
+    @(vif.cb_drv);
+  end
 endtask : drive_async
 
 

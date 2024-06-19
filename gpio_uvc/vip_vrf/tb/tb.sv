@@ -2,9 +2,10 @@ module tb;
   import uvm_pkg::*;
   import top_test_pkg::*;
 
-  // Clock generator
+  // Clock signal
+  parameter CLK_PERIOD = 10ns;
   logic clk;
-  always #5 clk = ~clk;
+  always #(CLK_PERIOD / 2) clk = ~clk;
 
   initial begin
     clk = 0;
@@ -26,7 +27,8 @@ module tb;
   );
   
   initial begin
-    $timeformat(-9, 0, "ns", 10);
+    //$timeformat(-9,  0, "ns", 10);
+    $timeformat(-12, 0, "ps", 10);
     $fsdbDumpvars;
     uvm_config_db #(virtual gpio_uvc_if)::set(null, "uvm_test_top.env.port_a_agent", "vif", port_a_if);
     uvm_config_db #(virtual gpio_uvc_if)::set(null, "uvm_test_top.env.port_b_agent", "vif", port_b_if);

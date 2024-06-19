@@ -17,6 +17,7 @@ package gpio_uvc_pkg;
 
   `include "gpio_uvc_sequence_manual.sv"
   `include "gpio_uvc_sequence_rst.sv"
+  `include "gpio_uvc_sequence_pulse.sv"
 
 endpackage : gpio_uvc_pkg
 

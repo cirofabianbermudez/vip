@@ -15,5 +15,10 @@ typedef enum {
   GPIO_UVC_ITEM_ASYNC
 } gpio_uvc_item_type_e;
 
+typedef enum {
+  GPIO_UVC_ITEM_DELAY_OFF,
+  GPIO_UVC_ITEM_DELAY_ON
+} gpio_uvc_item_delay_e;
+
 
 `endif // GPIO_UVC_TYPES_SV 

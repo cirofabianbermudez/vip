@@ -1,6 +1,6 @@
 TEST ?= top_test
 VERBOSITY ?= UVM_MEDIUM
-SEED ?= 1
+SEED ?= 5270411
 RUN_DIR ?= work
 PLUS ?=
 
@@ -27,7 +27,7 @@ FILES = $(UVCS) $(INCL_FILES) $(INTER_FILES) $(RTL_FILES) $(PKG_FILES) $(TEST_FI
 
 VCS = vcs -full64 -sverilog -ntb_opts uvm-1.2 \
 			-lca -debug_access+all+reverse -kdb +vcs+vcdpluson \
-			-timescale=1ns/100ps $(FILES) -l comp.log
+			-timescale=1ps/100fs $(FILES) -l comp.log
 
 SIM_OPTS = +UVM_TESTNAME=$(TEST) +UVM_VERBOSITY=$(VERBOSITY) -l simv.log \
 					 +UVM_TR_RECORD +UVM_LOG_RECORD +UVM_NO_RELNOTES \

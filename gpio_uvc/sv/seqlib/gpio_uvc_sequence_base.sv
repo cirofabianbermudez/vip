@@ -5,7 +5,7 @@ class gpio_uvc_sequence_base extends uvm_sequence #(gpio_uvc_sequence_item);
 
   `uvm_object_utils(gpio_uvc_sequence_base)
 
-  int num_of_trans = 10;
+  int num_of_trans = 50;
 
   extern function new(string name = "");
   extern virtual task body();

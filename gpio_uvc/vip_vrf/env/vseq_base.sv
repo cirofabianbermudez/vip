@@ -8,7 +8,7 @@ class vseq_base extends uvm_sequence;
   // Sequences
   gpio_uvc_sequence_manual seqA;
   gpio_uvc_sequence_base   seqB;
-  gpio_uvc_sequence_rst    seqR;
+  gpio_uvc_sequence_pulse    seqR;
 
   // Sequencers
   gpio_uvc_sequencer a_sqr;
@@ -29,7 +29,7 @@ endfunction : new
 task vseq_base::body();
   seqA = gpio_uvc_sequence_manual::type_id::create("seqA");
   seqB = gpio_uvc_sequence_base::type_id::create("seqB");
-  seqR = gpio_uvc_sequence_rst::type_id::create("seqR");
+  seqR = gpio_uvc_sequence_pulse::type_id::create("seqR");
   seqA.display();
   seqB.display();
   seqR.display();

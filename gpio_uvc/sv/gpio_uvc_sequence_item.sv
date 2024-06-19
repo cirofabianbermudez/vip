@@ -5,15 +5,21 @@ class gpio_uvc_sequence_item extends uvm_sequence_item;
 
   `uvm_object_utils(gpio_uvc_sequence_item)
 
-  gpio_uvc_item_stage_e  trans_stage = GPIO_UVC_ITEM_MIDDLE;
-  gpio_uvc_item_type_e   trans_type  = GPIO_UVC_ITEM_SYNC;
-
-  rand gpio_uvc_data_t gpio_pin;
+  gpio_uvc_item_stage_e  trans_stage        = GPIO_UVC_ITEM_MIDDLE;
+  gpio_uvc_item_type_e   trans_type         = GPIO_UVC_ITEM_SYNC;
+  gpio_uvc_item_delay_e  delay_enable       = GPIO_UVC_ITEM_DELAY_OFF;
+  rand int unsigned      delay_duration_ps;
+  rand gpio_uvc_data_t   gpio_pin;
 
   extern function new(string name = "");
   extern function void do_copy(uvm_object rhs);
   extern function bit  do_compare(uvm_object rhs, uvm_comparer comparer);
   extern function string convert2string();
+
+  // IMPORTANT -timescale=1ps/100fs to avoid Verdi errors
+  constraint c_delay {
+    soft delay_duration_ps inside { [1_000 : 10_000] }; // 1ns - 10ns
+  }
 
 endclass : gpio_uvc_sequence_item
 
@@ -32,6 +38,8 @@ function void gpio_uvc_sequence_item::do_copy(uvm_object rhs);
   gpio_pin = rhs_.gpio_pin;
   trans_stage = rhs_.trans_stage;
   trans_type = rhs_.trans_type;
+  delay_enable = rhs_.delay_enable;
+  delay_duration_ps = rhs_.delay_duration_ps;
 endfunction : do_copy
 
 
