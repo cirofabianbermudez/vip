@@ -30,9 +30,9 @@ module tb;
     //$timeformat(-9,  0, "ns", 10);
     $timeformat(-12, 0, "ps", 10);
     $fsdbDumpvars;
-    uvm_config_db #(virtual gpio_uvc_if)::set(null, "uvm_test_top.env.port_a_agent", "vif", port_a_if);
-    uvm_config_db #(virtual gpio_uvc_if)::set(null, "uvm_test_top.env.port_b_agent", "vif", port_b_if);
-    uvm_config_db #(virtual gpio_uvc_if)::set(null, "uvm_test_top.env.port_c_agent", "vif", port_c_if);
+    uvm_config_db #(virtual gpio_uvc_if)::set(null, "uvm_test_top.env.port_a_agent",   "vif", port_a_if);
+    uvm_config_db #(virtual gpio_uvc_if)::set(null, "uvm_test_top.env.port_b_agent",   "vif", port_b_if);
+    uvm_config_db #(virtual gpio_uvc_if)::set(null, "uvm_test_top.env.port_c_agent",   "vif", port_c_if);
     uvm_config_db #(virtual gpio_uvc_if)::set(null, "uvm_test_top.env.port_rst_agent", "vif", port_rst_if);
     run_test();
   end

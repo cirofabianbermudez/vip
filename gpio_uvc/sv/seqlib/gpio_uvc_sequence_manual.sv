@@ -5,7 +5,7 @@ class gpio_uvc_sequence_manual extends uvm_sequence #(gpio_uvc_sequence_item);
 
   `uvm_object_utils(gpio_uvc_sequence_manual)
 
-  int num_of_trans = 5;
+  int num_of_trans = 50;
 
   int values[5] = '{10, 20, 30, 40, 50};
 
@@ -29,13 +29,19 @@ task gpio_uvc_sequence_manual::body();
 
       start_item(req);
 
+      if ( !req.randomize() with { gpio_pin inside {[0:255]}; } ) begin
+        `uvm_error(get_type_name(), "Failed to randomize transaction")
+      end
+
       if (i == 0) begin
         req.trans_type = GPIO_UVC_ITEM_ASYNC;
       end else begin
         req.trans_type = GPIO_UVC_ITEM_SYNC;
       end
 
-      req.gpio_pin = values[i];
+      if (i < 5) begin
+        req.gpio_pin = values[i];
+      end
 
       if ( i == num_of_trans - 1) begin
         req.trans_stage = GPIO_UVC_ITEM_LAST;
