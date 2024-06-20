@@ -1,24 +1,24 @@
-`ifndef GPIO_UVC_PKG_SV
-`define GPIO_UVC_PKG_SV
+`ifndef I2C_UVC_PKG_SV
+`define I2C_UVC_PKG_SV
 
-package gpio_uvc_pkg;
+package i2c_uvc_pkg;
 
   `include "uvm_macros.svh"
   import uvm_pkg::*;
 
-  `include "gpio_uvc_types.sv"
-  `include "gpio_uvc_sequence_item.sv"
-  `include "gpio_uvc_config.sv"
-  `include "gpio_uvc_sequencer.sv"
-  `include "gpio_uvc_driver.sv"
-  `include "gpio_uvc_monitor.sv"
-  `include "gpio_uvc_agent.sv"
-  `include "gpio_uvc_sequence_base.sv"
+  `include "i2c_uvc_types.sv"
+  `include "i2c_uvc_sequence_item.sv"
+  `include "i2c_uvc_config.sv"
+  `include "i2c_uvc_sequencer.sv"
+  `include "i2c_uvc_driver.sv"
+  `include "i2c_uvc_monitor.sv"
+  `include "i2c_uvc_agent.sv"
+  `include "i2c_uvc_sequence_base.sv"
 
-  `include "gpio_uvc_sequence_manual.sv"
-  `include "gpio_uvc_sequence_rst.sv"
-  `include "gpio_uvc_sequence_pulse.sv"
+  `include "i2c_uvc_sequence_manual.sv"
+  `include "i2c_uvc_sequence_rst.sv"
+  `include "i2c_uvc_sequence_pulse.sv"
 
-endpackage : gpio_uvc_pkg
+endpackage : i2c_uvc_pkg
 
-`endif // TOP_TEST_PKG_SV
+`endif // I2C_UVC_PKG_SV
