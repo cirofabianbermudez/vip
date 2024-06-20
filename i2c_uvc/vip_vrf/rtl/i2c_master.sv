@@ -214,6 +214,5 @@ module i2c_master (
   assign done_tick = done_tick_i;
   assign ready = ready_i;
 
-
 endmodule
 
