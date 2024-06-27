@@ -14,8 +14,11 @@ module tb;
     rst_i = 0; #10ns;
   end
 
+  // I2C frequency selector
+  logic [15:0] dvsr_i = 'd20;
+
   // Interface
-  i2c_uvc_if i2c_master_if(clk_i, rst_i);
+  i2c_uvc_if i2c_master_if(clk_i, rst_i, dvsr_i);
 
   // Instantiation
   i2c_master (
