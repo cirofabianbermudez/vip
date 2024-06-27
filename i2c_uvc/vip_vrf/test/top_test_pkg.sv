@@ -6,7 +6,7 @@ package top_test_pkg;
   `include "uvm_macros.svh"
   import uvm_pkg::*;
 
-  import gpio_uvc_pkg::*;
+  import i2c_uvc_pkg::*;
   import top_env_pkg::*;
   `include "top_test.sv"
 
