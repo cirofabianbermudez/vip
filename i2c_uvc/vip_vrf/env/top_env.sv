@@ -34,6 +34,8 @@ function void top_env::build_agents();
 
   i2c_agent_cfg = i2c_uvc_config::type_id::create("i2c_agent_cfg", this);
   i2c_agent_cfg.is_active = UVM_ACTIVE;
+  i2c_agent_cfg.clk_freq = 100_000_000;  // 100 MHz
+  i2c_agent_cfg.i2c_freq = 100_000;       // 100 kbps
   uvm_config_db #(i2c_uvc_config)::set(this, "i2c_agent", "cfg", i2c_agent_cfg);
   i2c_agent = i2c_uvc_agent::type_id::create("i2c_agent", this);
 
