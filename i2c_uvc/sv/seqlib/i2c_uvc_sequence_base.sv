@@ -24,7 +24,7 @@ task i2c_uvc_sequence_base::body();
     
     // Start CMD
     start_item(req);
-    if ( !req.randomize() with { write_data inside {[0:255]}; address inside {[1:10]}; } ) begin
+    if ( !req.randomize() with { write_data inside {[0:255]}; address inside {[0:127]}; } ) begin
       `uvm_error(get_type_name(), "Failed to randomize transaction")
     end
 
