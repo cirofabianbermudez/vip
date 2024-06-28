@@ -14,14 +14,14 @@ INCL_FILES = +incdir+$(ROOT_DIR)/test \
 
 INTER_FILES =
 
-RTL_FILES = $(ROOT_DIR)/rtl/adder.sv
+RTL_FILES = $(ROOT_DIR)/rtl/i2c_master.sv
 
 PKG_FILES = $(ROOT_DIR)/env/top_env_pkg.sv \
 						$(ROOT_DIR)/test/top_test_pkg.sv
 
 TEST_FILES = $(ROOT_DIR)/tb/tb.sv
 
-UVCS = -F $(ROOT_DIR)/../gpio_uvc.f
+UVCS = -F $(ROOT_DIR)/../i2c_uvc.f
 
 FILES = $(UVCS) $(INCL_FILES) $(INTER_FILES) $(RTL_FILES) $(PKG_FILES) $(TEST_FILES)
 
