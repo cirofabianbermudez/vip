@@ -30,7 +30,9 @@ task vseq_base::body();
   seqB.display();
   //fork
     seqB.start(sqrA, this);
-    seqA.start(sqrA, this);
+    repeat(10) begin
+      seqA.start(sqrA, this);
+    end
   //join
 endtask : body
 
