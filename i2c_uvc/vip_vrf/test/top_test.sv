@@ -35,9 +35,7 @@ endfunction : end_of_elaboration_phase
 
 
 function void top_test::init_vseq();
-  vseq.a_sqr = env.port_a_agent.sqr;
-  vseq.b_sqr = env.port_b_agent.sqr;
-  vseq.rst_sqr = env.port_rst_agent.sqr;
+  vseq.sqrA = env.i2c_agent.sqr;
 endfunction : init_vseq
 
 
