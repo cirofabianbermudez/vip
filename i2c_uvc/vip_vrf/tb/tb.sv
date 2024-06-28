@@ -1,3 +1,4 @@
+
 module tb;
   import uvm_pkg::*;
   import top_test_pkg::*;
@@ -7,21 +8,11 @@ module tb;
   logic clk_i = 0;
   always #(CLK_PERIOD / 2) clk_i = ~clk_i;
 
-  // Reset signal
-  logic rst_i;
-  initial begin
-    rst_i = 1; #10ns;
-    rst_i = 0; #10ns;
-  end
-
-  // I2C frequency selector
-  logic [15:0] dvsr_i = 'd20;
-
   // Interface
-  i2c_uvc_if i2c_master_if(clk_i, rst_i, dvsr_i);
+  i2c_uvc_if i2c_master_if(clk_i);
 
   // Instantiation
-  i2c_master (
+  i2c_master dut (
     .clk_i(i2c_master_if.clk_i),
     .rst_i(i2c_master_if.rst_i),
     .din_i(i2c_master_if.din_i),
