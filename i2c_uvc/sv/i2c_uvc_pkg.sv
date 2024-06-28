@@ -15,9 +15,9 @@ package i2c_uvc_pkg;
   `include "i2c_uvc_agent.sv"
   `include "i2c_uvc_sequence_base.sv"
 
-  `include "i2c_uvc_sequence_manual.sv"
+  //`include "i2c_uvc_sequence_manual.sv"
   `include "i2c_uvc_sequence_rst.sv"
-  `include "i2c_uvc_sequence_pulse.sv"
+  //`include "i2c_uvc_sequence_pulse.sv"
 
 endpackage : i2c_uvc_pkg
 
