@@ -1,44 +1,48 @@
-`ifndef GPIO_UVC_SEQUENCE_RST_SV
-`define GPIO_UVC_SEQUENCE_RST_SV
+`ifndef I2C_UVC_SEQUENCE_RST_SV
+`define I2C_UVC_SEQUENCE_RST_SV
 
-class gpio_uvc_sequence_rst extends uvm_sequence #(gpio_uvc_sequence_item);
+class i2c_uvc_sequence_rst extends uvm_sequence #(i2c_uvc_sequence_item);
 
-  `uvm_object_utils(gpio_uvc_sequence_rst)
+  `uvm_object_utils(i2c_uvc_sequence_rst)
 
-  int num_of_trans = 3;
+  int num_of_trans = 2;
 
   extern function new(string name = "");
   extern virtual task body();
   extern function void display();
 
-endclass : gpio_uvc_sequence_rst
+endclass : i2c_uvc_sequence_rst
 
 
-function gpio_uvc_sequence_rst::new(string name = "");
+function i2c_uvc_sequence_rst::new(string name = "");
   super.new(name);
 endfunction : new
 
 
-task gpio_uvc_sequence_rst::body();
-    req = gpio_uvc_sequence_item::type_id::create("req");
+task i2c_uvc_sequence_rst::body();
+    req = i2c_uvc_sequence_item::type_id::create("req");
     for (int i = 0; i < num_of_trans; i++) begin
 
       start_item(req);
 
-      //if ( !req.randomize() with {gpio_pin inside {1,0} };) begin
-      //  `uvm_error(get_type_name(), "Failed to randomize transaction")
-      //end
+      if ( !req.randomize() with { delay_duration_ps inside { [5_000_000 : 10_000_000] }; } ) begin
+        `uvm_error(get_type_name(), "Failed to randomize transaction")
+      end
+
+      req.data_in = 0;
+      req.cmd = 0;
+      req.write_en = 0;
 
       if (i == 0) begin
-        req.gpio_pin = 1;
-        req.trans_type = GPIO_UVC_ITEM_ASYNC;
+        req.rst = 1;
+        req.trans_type   = I2C_UVC_ITEM_ASYNC;
+        req.delay_enable = I2C_UVC_ITEM_DELAY_ON;
       end else begin
-        req.gpio_pin = 0;
-        req.trans_type = GPIO_UVC_ITEM_SYNC;
+        req.rst = 0;
       end
 
       if ( i == num_of_trans - 1) begin
-        req.trans_stage = GPIO_UVC_ITEM_LAST;
+        req.trans_stage = I2C_UVC_ITEM_LAST;
       end
 
       finish_item(req);
@@ -46,8 +50,8 @@ task gpio_uvc_sequence_rst::body();
 endtask : body
 
 
-function void gpio_uvc_sequence_rst::display();
+function void i2c_uvc_sequence_rst::display();
  `uvm_info(get_type_name(), "inside rst sequence", UVM_MEDIUM);
 endfunction : display
 
-`endif // GPIO_UVC_SEQUENCE_RST_SV
+`endif // I2C_UVC_SEQUENCE_RST_SV

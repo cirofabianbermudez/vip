@@ -1,9 +1,9 @@
-`ifndef GPIO_UVC_SEQUENCE_MANUAL_SV
-`define GPIO_UVC_SEQUENCE_MANUAL_SV
+`ifndef I2C_UVC_SEQUENCE_MANUAL_SV
+`define I2C_UVC_SEQUENCE_MANUAL_SV
 
-class gpio_uvc_sequence_manual extends uvm_sequence #(gpio_uvc_sequence_item);
+class i2c_uvc_sequence_manual extends uvm_sequence #(i2c_uvc_sequence_item);
 
-  `uvm_object_utils(gpio_uvc_sequence_manual)
+  `uvm_object_utils(i2c_uvc_sequence_manual)
 
   int num_of_trans = 5;
 
@@ -14,31 +14,31 @@ class gpio_uvc_sequence_manual extends uvm_sequence #(gpio_uvc_sequence_item);
   extern virtual task body();
   extern function void display();
 
-endclass : gpio_uvc_sequence_manual
+endclass : i2c_uvc_sequence_manual
 
 
-function gpio_uvc_sequence_manual::new(string name = "");
+function i2c_uvc_sequence_manual::new(string name = "");
   super.new(name);
 endfunction : new
 
 
-task gpio_uvc_sequence_manual::body();
+task i2c_uvc_sequence_manual::body();
 
-    req = gpio_uvc_sequence_item::type_id::create("req");
+    req = i2c_uvc_sequence_item::type_id::create("req");
     for (int i = 0; i < num_of_trans; i++) begin
 
       start_item(req);
 
       if (i == 0) begin
-        req.trans_type = GPIO_UVC_ITEM_ASYNC;
+        req.trans_type = I2C_UVC_ITEM_ASYNC;
       end else begin
-        req.trans_type = GPIO_UVC_ITEM_SYNC;
+        req.trans_type = I2C_UVC_ITEM_SYNC;
       end
 
       req.gpio_pin = values[i];
 
       if ( i == num_of_trans - 1) begin
-        req.trans_stage = GPIO_UVC_ITEM_LAST;
+        req.trans_stage = I2C_UVC_ITEM_LAST;
       end
 
       finish_item(req);
@@ -48,8 +48,8 @@ endtask : body
 
 
 
-function void gpio_uvc_sequence_manual::display();
+function void i2c_uvc_sequence_manual::display();
  `uvm_info(get_type_name(), "inside manual sequence", UVM_MEDIUM);
 endfunction : display
 
-`endif // GPIO_UVC_SEQUENCE_MANUAL_SV
+`endif // I2C_UVC_SEQUENCE_MANUAL_SV
