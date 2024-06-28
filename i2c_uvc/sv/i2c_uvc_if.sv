@@ -2,12 +2,12 @@
 `define I2C_UVC_IF_SV
 
 interface i2c_uvc_if (
-  input logic        clk_i,
-  input logic        rst_i,
-  input logic [15:0] dvsr_i
+  input logic        clk_i
 );
 
+  logic        rst_i;
   logic [ 7:0] din_i;
+  logic [15:0] dvsr_i;
   logic [ 2:0] cmd_i;
   logic        wr_i2c_i;
   wire         scl_io;
@@ -20,8 +20,10 @@ interface i2c_uvc_if (
   assign (pull1, highz0) scl_io = 1'b1;
   assign (pull1, highz0) sda_io = 1'b1;
 
-  clocking cb_drv @(posedge clk);
-    default output #1ns;
+  clocking cb_drv @(posedge clk_i);
+    default output #5ns;
+    output rst_i;
+    output dvsr_i;
     output din_i;
     output cmd_i;
     output wr_i2c_i;
@@ -29,7 +31,7 @@ interface i2c_uvc_if (
     inout  sda_io;
   endclocking : cb_drv
 
-  clocking cb_mon @(posedge clk);
+  clocking cb_mon @(posedge clk_i);
     default input #1ns;
     input  ready_o;
     input  done_tick_o;
@@ -37,7 +39,7 @@ interface i2c_uvc_if (
     input  dout_o;
   endclocking : cb_mon
 
-  modport drv (clocking cb_drv);
+  modport drv (clocking cb_drv, output rst_i, output dvsr_i);
   modport mon (clocking cb_mon);
 
 endinterface : i2c_uvc_if
