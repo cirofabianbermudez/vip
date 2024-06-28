@@ -24,10 +24,10 @@ module i2c_master (
     output logic [ 7:0] dout_o
 );
 
-  localparam START_CMD = 3'b000;
-  localparam WR_CMD = 3'b001;
-  localparam RD_CMD = 3'b010;
-  localparam STOP_CMD = 3'b011;
+  localparam START_CMD   = 3'b000;
+  localparam WR_CMD      = 3'b001;
+  localparam RD_CMD      = 3'b010;
+  localparam STOP_CMD    = 3'b011;
   localparam RESTART_CMD = 3'b100;
 
   typedef enum {
@@ -61,8 +61,8 @@ module i2c_master (
   end
 
   assign scl_io = (scl_temp_d) ? 1'bz : 1'b0;
-  assign into = (data_phase && cmd_reg_q == RD_CMD && data_counter_q < 8) || 
-                (data_phase && cmd_reg_q == WR_CMD && data_counter_q == 8);
+  assign into = (data_phase && cmd_reg_q == RD_CMD && data_counter_q  < 'd8) || 
+                (data_phase && cmd_reg_q == WR_CMD && data_counter_q == 'd8);
 
   assign sda_io = (into || sda_temp_d) ? 1'bz : 1'b0;
   assign dout_o = rx_shift_buffer_q[8:1];
