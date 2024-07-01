@@ -1,0 +1,4 @@
+--inplace
+--line_break_penalty=8
+--column_limit=200
+--over_column_limit_penalty=100
