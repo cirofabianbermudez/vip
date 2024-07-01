@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\n[INFO]: Cheking dependencies"
+echo -e "\n[INFO]: Checking dependencies"
 DEPENDENCIES=("tar" "wget" "python3")
 for item in "${DEPENDENCIES[@]}"; do
   if command -v $item &> /dev/null; then
