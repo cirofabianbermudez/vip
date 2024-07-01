@@ -5,7 +5,7 @@
 // [Language]       SystemVerilog 2017 [IEEE Std. 1800-2017]
 // [Created]        2024.06.22
 // [Description]    Module I2C master
-// [Notes]          
+// [Notes]          -
 // [Status]         Draft -> Under Development -> Testing
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -24,31 +24,41 @@ module i2c_master (
     output logic [ 7:0] dout_o
 );
 
-  localparam START_CMD   = 3'b000;
-  localparam WR_CMD      = 3'b001;
-  localparam RD_CMD      = 3'b010;
-  localparam STOP_CMD    = 3'b011;
-  localparam RESTART_CMD = 3'b100;
+  localparam logic [2:0] START_CMD = 3'b000;
+  localparam logic [2:0] WR_CMD = 3'b001;
+  localparam logic [2:0] RD_CMD = 3'b010;
+  localparam logic [2:0] STOP_CMD = 3'b011;
+  localparam logic [2:0] RESTART_CMD = 3'b100;
 
   typedef enum {
-    Idle, Hold, Start1, Start2, Data1, Data2, Data3, Data4, DataEnd,
-    Restart, Stop1, Stop2
+    Idle,
+    Hold,
+    Start1,
+    Start2,
+    Data1,
+    Data2,
+    Data3,
+    Data4,
+    DataEnd,
+    Restart,
+    Stop1,
+    Stop2
   } state_type_e;
 
   state_type_e state_reg, state_next;
-  logic [15:0] tick_counter_q, tick_counter_d;       // Counter for I2C frequency
-  logic [15:0] qutr, half;                           // qutr, half: Constants to detect 1/4 and 1/2 of I2C frequency
+  logic [15:0] tick_counter_q, tick_counter_d;  // Counter for I2C frequency
+  logic [15:0] qutr, half;  // qutr, half: Constants to detect 1/4 and 1/2 of I2C frequency
   logic [8:0] tx_shift_buffer_q, tx_shift_buffer_d;  // TX shift register, LSB is the ACK bit
   logic [8:0] rx_shift_buffer_q, rx_shift_buffer_d;  // RX shift register, LSB is the ACK bit
-  logic [2:0] cmd_reg_q, cmd_reg_d;                  // Store the current command
-  logic [3:0] data_counter_q, data_counter_d;        // Keep track of the number of bits processed
-  logic sda_temp_q, sda_temp_d;                      // FSM variable SDA, register SDA
-  logic scl_temp_q, scl_temp_d;                      // FSM variable SCL, register SCL
-  logic data_phase;                                  // FSM variable to check if in state Data1, Data2, Data3, or Data4
-  logic done_tick;                                   // FSM varible asserted for one cycle post controller completion
-  logic ready;                                       // FSM variable indicates if state is Idle and Hold
-  logic into;                                        // Detect if the data flows into the controller
-  logic nack;                                        // LSB of din_i acknowledge bit
+  logic [2:0] cmd_reg_q, cmd_reg_d;  // Store the current command
+  logic [3:0] data_counter_q, data_counter_d;  // Keep track of the number of bits processed
+  logic sda_temp_q, sda_temp_d;  // FSM variable SDA, register SDA
+  logic scl_temp_q, scl_temp_d;  // FSM variable SCL, register SCL
+  logic data_phase;  // FSM variable to check if in state Data1, Data2, Data3, or Data4
+  logic done_tick;  // FSM varible asserted for one cycle post controller completion
+  logic ready;  // FSM variable indicates if state is Idle and Hold
+  logic into;  // Detect if the data flows into the controller
+  logic nack;  // LSB of din_i acknowledge bit
 
   always_ff @(posedge clk_i, posedge rst_i) begin
     if (rst_i) begin
@@ -61,7 +71,7 @@ module i2c_master (
   end
 
   assign scl_io = (scl_temp_d) ? 1'bz : 1'b0;
-  assign into = (data_phase && cmd_reg_q == RD_CMD && data_counter_q  < 'd8) || 
+  assign into = (data_phase && cmd_reg_q == RD_CMD && data_counter_q  < 'd8) ||
                 (data_phase && cmd_reg_q == WR_CMD && data_counter_q == 'd8);
 
   assign sda_io = (into || sda_temp_d) ? 1'bz : 1'b0;

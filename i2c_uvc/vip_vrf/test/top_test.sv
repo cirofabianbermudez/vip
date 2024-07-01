@@ -5,7 +5,7 @@ class top_test extends uvm_test;
 
   `uvm_component_utils(top_test)
 
-  top_env env;
+  top_env   env;
   vseq_base vseq;
 
   extern function new(string name, uvm_component parent);
@@ -50,4 +50,4 @@ task top_test::run_phase(uvm_phase phase);
 
 endtask : run_phase
 
-`endif // TOP_TEST_SV
+`endif  // TOP_TEST_SV

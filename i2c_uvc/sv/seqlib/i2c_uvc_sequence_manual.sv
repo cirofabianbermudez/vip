@@ -24,32 +24,32 @@ endfunction : new
 
 task i2c_uvc_sequence_manual::body();
 
-    req = i2c_uvc_sequence_item::type_id::create("req");
-    for (int i = 0; i < num_of_trans; i++) begin
+  req = i2c_uvc_sequence_item::type_id::create("req");
+  for (int i = 0; i < num_of_trans; i++) begin
 
-      start_item(req);
+    start_item(req);
 
-      if (i == 0) begin
-        req.trans_type = I2C_UVC_ITEM_ASYNC;
-      end else begin
-        req.trans_type = I2C_UVC_ITEM_SYNC;
-      end
-
-      req.gpio_pin = values[i];
-
-      if ( i == num_of_trans - 1) begin
-        req.trans_stage = I2C_UVC_ITEM_LAST;
-      end
-
-      finish_item(req);
+    if (i == 0) begin
+      req.trans_type = I2C_UVC_ITEM_ASYNC;
+    end else begin
+      req.trans_type = I2C_UVC_ITEM_SYNC;
     end
+
+    req.gpio_pin = values[i];
+
+    if (i == num_of_trans - 1) begin
+      req.trans_stage = I2C_UVC_ITEM_LAST;
+    end
+
+    finish_item(req);
+  end
 
 endtask : body
 
 
 
 function void i2c_uvc_sequence_manual::display();
- `uvm_info(get_type_name(), "inside manual sequence", UVM_MEDIUM);
+  `uvm_info(get_type_name(), "inside manual sequence", UVM_MEDIUM);
 endfunction : display
 
-`endif // I2C_UVC_SEQUENCE_MANUAL_SV
+`endif  // I2C_UVC_SEQUENCE_MANUAL_SV

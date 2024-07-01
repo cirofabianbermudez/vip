@@ -21,4 +21,4 @@ package i2c_uvc_pkg;
 
 endpackage : i2c_uvc_pkg
 
-`endif // I2C_UVC_PKG_SV
+`endif  // I2C_UVC_PKG_SV

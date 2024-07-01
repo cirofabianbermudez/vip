@@ -25,13 +25,13 @@ endfunction : new
 
 
 function void i2c_uvc_driver::build_phase(uvm_phase phase);
-  if ( !uvm_config_db #(virtual i2c_uvc_if)::get(get_parent(), "", "vif", vif) ) begin
-		  `uvm_fatal(get_name(), "Could not retrieve i2c_uvc_if from config db")
-	end
+  if (!uvm_config_db#(virtual i2c_uvc_if)::get(get_parent(), "", "vif", vif)) begin
+    `uvm_fatal(get_name(), "Could not retrieve i2c_uvc_if from config db")
+  end
 
-  if ( !uvm_config_db #(i2c_uvc_config)::get(get_parent(), "", "cfg", cfg) ) begin
-		  `uvm_fatal(get_name(), "Could not retrieve i2c_uvc_config from config db")
-	end
+  if (!uvm_config_db#(i2c_uvc_config)::get(get_parent(), "", "cfg", cfg)) begin
+    `uvm_fatal(get_name(), "Could not retrieve i2c_uvc_config from config db")
+  end
 
 endfunction : build_phase
 
@@ -62,8 +62,9 @@ task i2c_uvc_driver::drive_async();
   vif.wr_i2c_i = req.write_en;
   vif.cmd_i    = req.cmd;
   if (req.delay_enable == I2C_UVC_ITEM_DELAY_ON) begin
-    $display($sformatf("\ndelay_enable: %5d, delay_duration_ps: %5d\n", req.delay_enable, req.delay_duration_ps) );
-    #(req.delay_duration_ps*1ps);
+    $display($sformatf("\ndelay_enable: %5d, delay_duration_ps: %5d\n", req.delay_enable,
+                       req.delay_duration_ps));
+    #(req.delay_duration_ps * 1ps);
   end else begin
     @(vif.cb_drv);
   end
@@ -82,14 +83,14 @@ task i2c_uvc_driver::do_drive();
     @(vif.cb_drv);
     vif.cb_drv.wr_i2c_i <= 1'b0;
     wait (vif.ready_o != 0);
-    @(vif.cb_drv iff (vif.ready_o == 1) );
+    @(vif.cb_drv iff (vif.ready_o == 1));
     @(vif.cb_drv);
   end
 
   if (req.trans_stage == I2C_UVC_ITEM_LAST) begin
-    repeat(100) @(vif.cb_drv);
+    repeat (100) @(vif.cb_drv);
   end
 
 endtask : do_drive
 
-`endif // I2C_UVC_DRIVER_SV
+`endif  // I2C_UVC_DRIVER_SV

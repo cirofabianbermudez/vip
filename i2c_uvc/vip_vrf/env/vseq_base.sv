@@ -7,7 +7,7 @@ class vseq_base extends uvm_sequence;
 
   // Sequences
   i2c_uvc_sequence_base seqA;
-  i2c_uvc_sequence_rst  seqB;
+  i2c_uvc_sequence_rst seqB;
 
   // Sequencers
   i2c_uvc_sequencer sqrA;
@@ -29,11 +29,11 @@ task vseq_base::body();
   seqB = i2c_uvc_sequence_rst::type_id::create("seqB");
   seqB.display();
   //fork
-    seqB.start(sqrA, this);
-    repeat(10) begin
-      seqA.start(sqrA, this);
-    end
+  seqB.start(sqrA, this);
+  repeat (10) begin
+    seqA.start(sqrA, this);
+  end
   //join
 endtask : body
 
-`endif // VSEQ_BASE_SV
+`endif  // VSEQ_BASE_SV

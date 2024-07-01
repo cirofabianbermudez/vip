@@ -2,8 +2,8 @@
 `define I2C_UVC_TYPES_SV
 
 typedef enum {
-  I2C_UVC_ITEM_FIRST, 
-  I2C_UVC_ITEM_MIDDLE, 
+  I2C_UVC_ITEM_FIRST,
+  I2C_UVC_ITEM_MIDDLE,
   I2C_UVC_ITEM_LAST
 } i2c_uvc_item_stage_e;
 
@@ -25,4 +25,4 @@ typedef enum logic [2:0] {
   I2C_UVC_ITEM_RESTART_CMD = 3'b100
 } i2c_uvc_item_cmd_e;
 
-`endif // I2C_UVC_TYPES_SV 
+`endif  // I2C_UVC_TYPES_SV

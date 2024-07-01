@@ -12,4 +12,4 @@ package top_test_pkg;
 
 endpackage : top_test_pkg
 
-`endif // TOP_TEST_PKG_SV
+`endif  // TOP_TEST_PKG_SV

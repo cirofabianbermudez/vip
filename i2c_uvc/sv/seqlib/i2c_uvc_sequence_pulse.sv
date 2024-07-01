@@ -20,38 +20,38 @@ endfunction : new
 
 
 task i2c_uvc_sequence_pulse::body();
-    req = i2c_uvc_sequence_item::type_id::create("req");
-    for (int i = 0; i < num_of_trans; i++) begin
+  req = i2c_uvc_sequence_item::type_id::create("req");
+  for (int i = 0; i < num_of_trans; i++) begin
 
-      start_item(req);
+    start_item(req);
 
-      if ( !req.randomize() with { 
-        gpio_pin inside {1,0}; 
-        delay_duration_ps inside {[ 5_000 : 10_000]}; // 8ns - 30ns
+    if (!req.randomize() with {
+          gpio_pin inside {1, 0};
+          delay_duration_ps inside {[5_000 : 10_000]};  // 8ns - 30ns
         }) begin
-        `uvm_error(get_type_name(), "Failed to randomize transaction")
-      end
+      `uvm_error(get_type_name(), "Failed to randomize transaction")
+    end
 
-      req.trans_type = I2C_UVC_ITEM_ASYNC;
-      if (i == 0) begin
-        req.gpio_pin = 1;
-        req.delay_enable = I2C_UVC_ITEM_DELAY_ON;
+    req.trans_type = I2C_UVC_ITEM_ASYNC;
+    if (i == 0) begin
+      req.gpio_pin = 1;
+      req.delay_enable = I2C_UVC_ITEM_DELAY_ON;
       //end else begin
       //  req.delay_enable = I2C_UVC_ITEM_DELAY_OFF;
       //  req.gpio_pin = 0;
-      end
-
-      if ( i == num_of_trans - 1) begin
-        req.trans_stage = I2C_UVC_ITEM_LAST;
-      end
-
-      finish_item(req);
     end
+
+    if (i == num_of_trans - 1) begin
+      req.trans_stage = I2C_UVC_ITEM_LAST;
+    end
+
+    finish_item(req);
+  end
 endtask : body
 
 
 function void i2c_uvc_sequence_pulse::display();
- `uvm_info(get_type_name(), "inside rst sequence", UVM_MEDIUM);
+  `uvm_info(get_type_name(), "inside rst sequence", UVM_MEDIUM);
 endfunction : display
 
-`endif // I2C_UVC_SEQUENCE_PULSE_SV
+`endif  // I2C_UVC_SEQUENCE_PULSE_SV

@@ -2,7 +2,7 @@
 `define I2C_UVC_IF_SV
 
 interface i2c_uvc_if (
-  input logic        clk_i
+    input logic clk_i
 );
 
   logic        rst_i;
@@ -27,21 +27,21 @@ interface i2c_uvc_if (
     output din_i;
     output cmd_i;
     output wr_i2c_i;
-    inout  scl_io;
-    inout  sda_io;
+    inout scl_io;
+    inout sda_io;
   endclocking : cb_drv
 
   clocking cb_mon @(posedge clk_i);
     default input #1ns;
-    input  ready_o;
-    input  done_tick_o;
-    input  ack_o;
-    input  dout_o;
+    input ready_o;
+    input done_tick_o;
+    input ack_o;
+    input dout_o;
   endclocking : cb_mon
 
-  modport drv (clocking cb_drv, output rst_i, output dvsr_i);
-  modport mon (clocking cb_mon);
+  modport drv(clocking cb_drv, output rst_i, output dvsr_i);
+  modport mon(clocking cb_mon);
 
 endinterface : i2c_uvc_if
 
-`endif // I2C_UVC_IF_SV
+`endif  // I2C_UVC_IF_SV
