@@ -40,11 +40,13 @@ task i2c_uvc_sequence_base::body();
     req.cmd            = I2C_UVC_ITEM_WR_CMD;
     finish_item(req);
 
-    // Write Byte
-    start_item(req);
-    req.cmd            = I2C_UVC_ITEM_WR_CMD;
-    req.data_in        = req.write_data;
-    finish_item(req);
+    repeat(req.num_bytes) begin
+      // Write Byte
+      start_item(req);
+      req.cmd            = I2C_UVC_ITEM_WR_CMD;
+      req.data_in        = req.write_data;
+      finish_item(req);
+    end
 
     // Stop CMD
     start_item(req);
